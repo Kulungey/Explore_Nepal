@@ -52,6 +52,20 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
 
+            if ("Pending".equalsIgnoreCase(user.getStatus())) {
+                request.setAttribute("errorMessage", "Your account is pending admin approval. Please wait.");
+                request.setAttribute("emailValue", email);
+                request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+                return;
+            }
+
+            if ("Rejected".equalsIgnoreCase(user.getStatus())) {
+                request.setAttribute("errorMessage", "Your account has been rejected. Please contact support.");
+                request.setAttribute("emailValue", email);
+                request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+                return;
+            }
+
             HttpSession oldSession = request.getSession(false);
             if (oldSession != null) oldSession.invalidate();
 

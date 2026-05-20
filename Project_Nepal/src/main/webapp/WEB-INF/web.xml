@@ -58,6 +58,16 @@
     <servlet-name>HomeServlet</servlet-name>
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ProfileServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.ProfileServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>ProfileServlet</servlet-name>
+    <url-pattern>/profile</url-pattern>
+</servlet-mapping>
 
   <servlet>
     <servlet-name>LoginServlet</servlet-name>
@@ -102,6 +112,15 @@
   <servlet-mapping>
     <servlet-name>ContactServlet</servlet-name>
     <url-pattern>/contact</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>TeamServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.TeamServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TeamServlet</servlet-name>
+    <url-pattern>/team</url-pattern>
   </servlet-mapping>
 
   <servlet>

@@ -129,49 +129,6 @@
     </div>
 <%-- ── Team Section ───────────────────────────────────────── --%>
 <div style="margin-top:var(--sp-6); text-align:center;">
-
-  <h2 style="font-size:var(--text-2xl); color:var(--color-primary); margin-bottom:var(--sp-4);">
-    Meet Our Team
-  </h2>
-
-  <div style="display:flex; justify-content:center; gap:var(--sp-5); flex-wrap:wrap;">
-
-    <%-- Team Member 1 --%>
-    <div style="text-align:center;">
-      <img
-        src="${pageContext.request.contextPath}/images/ayush.jpg"
-        alt="Team Member 1"
-        style="width:140px; height:140px; object-fit:cover; border-radius:50%; border:4px solid #fff; box-shadow:var(--shadow-card);"
-      />
-      <p style="margin-top:var(--sp-2); font-weight:600; color:var(--color-primary);">
-        Ayush Rai
-      </p>
-    </div>
-
-    <%-- Team Member 2 --%>
-    <div style="text-align:center;">
-      <img
-        src="${pageContext.request.contextPath}/images/kamchor.jpg"
-        alt="Team Member 2"
-        style="width:140px; height:140px; object-fit:cover; border-radius:50%; border:4px solid #fff; box-shadow:var(--shadow-card);"
-      />
-      <p style="margin-top:var(--sp-2); font-weight:600; color:var(--color-primary);">
-        Amitabh Manandhar
-      </p>
-    </div>
-
-    <%-- Team Member 3 --%>
-    <div style="text-align:center;">
-      <img
-        src="${pageContext.request.contextPath}/images/kamchor-2.jpg"
-        alt="Team Member 3"
-        style="width:140px; height:140px; object-fit:cover; border-radius:50%; border:4px solid #fff; box-shadow:var(--shadow-card);"
-      />
-      <p style="margin-top:var(--sp-2); font-weight:600; color:var(--color-primary);">
-        Rising Maharjan
-      </p>
-    </div>
-
   </div>
 </div>
   </main>

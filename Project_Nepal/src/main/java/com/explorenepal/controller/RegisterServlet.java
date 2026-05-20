@@ -2,6 +2,7 @@ package com.explorenepal.controller;
 
 import com.explorenepal.dao.UserDAO;
 import com.explorenepal.model.User;
+import com.explorenepal.util.ValidationUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,51 +35,34 @@ public class RegisterServlet extends HttpServlet {
         String password  = request.getParameter("password");
         String confirmPw = request.getParameter("confirmPassword");
 
-        if (isBlank(fullName) || isBlank(email) || isBlank(phone) ||
-            isBlank(password) || isBlank(confirmPw)) {
+        if (ValidationUtil.isBlank(fullName) || ValidationUtil.isBlank(email) ||
+            ValidationUtil.isBlank(phone) || ValidationUtil.isBlank(password) ||
+            ValidationUtil.isBlank(confirmPw)) {
             forwardWithError(request, response, "All fields are required.", fullName, email, phone);
             return;
         }
 
-        if (!fullName.trim().matches("[a-zA-Z\\s.'-]+")) {
+        if (!ValidationUtil.isValidName(fullName)) {
             forwardWithError(request, response,
                 "Full name must contain only letters.", fullName, email, phone);
             return;
         }
 
-        if (!email.trim().matches("^[\\w.+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$")) {
+        if (!ValidationUtil.isValidEmail(email)) {
             forwardWithError(request, response,
                 "Please enter a valid email address.", fullName, email, phone);
             return;
         }
 
-        if (!phone.trim().matches("9\\d{9}")) {
+        if (!ValidationUtil.isValidPhone(phone)) {
             forwardWithError(request, response,
                 "Phone must be 10 digits and start with 9.", fullName, email, phone);
             return;
         }
 
-        if (password.length() < 8) {
+        if (!ValidationUtil.isValidPassword(password)) {
             forwardWithError(request, response,
-                "Password must be at least 8 characters long.", fullName, email, phone);
-            return;
-        }
-
-        if (!password.matches(".*[A-Z].*")) {
-            forwardWithError(request, response,
-                "Password must contain at least 1 uppercase letter.", fullName, email, phone);
-            return;
-        }
-
-        if (!password.matches(".*[0-9].*")) {
-            forwardWithError(request, response,
-                "Password must contain at least 1 number.", fullName, email, phone);
-            return;
-        }
-
-        if (!password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*")) {
-            forwardWithError(request, response,
-                "Password must contain at least 1 special character.", fullName, email, phone);
+                "Password must be at least 6 characters long.", fullName, email, phone);
             return;
         }
 
@@ -109,17 +93,14 @@ public class RegisterServlet extends HttpServlet {
             newUser.setRole("USER");
             userDAO.registerUser(newUser);
 
-            request.setAttribute("successMessage", "Registration successful! You can now log in.");
+            request.setAttribute("successMessage",
+                "Registration successful! Your account is pending admin approval. You will be able to log in once approved.");
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 
         } catch (Exception e) {
             forwardWithError(request, response,
                 "A system error occurred. Please try again later.", fullName, email, phone);
         }
-    }
-
-    private boolean isBlank(String s) {
-        return s == null || s.trim().isEmpty();
     }
 
     private void forwardWithError(HttpServletRequest req, HttpServletResponse res,

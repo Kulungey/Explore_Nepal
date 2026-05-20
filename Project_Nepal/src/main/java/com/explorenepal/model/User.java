@@ -12,6 +12,8 @@ public class User {
     private int roleId;
     private String roleName;
     private LocalDateTime createdAt;
+    private String status;
+
 
     public User() {}
 
@@ -33,6 +35,13 @@ public class User {
 
     public int getRoleId()                    { return roleId; }
     public void setRoleId(int v)              { this.roleId = v; }
+    
+    public String getStatus()           { return status; }
+    public void setStatus(String v)     { this.status = v; }
+
+    public boolean isPending()          { return "Pending".equalsIgnoreCase(status); }
+    public boolean isApproved()         { return "Approved".equalsIgnoreCase(status); }
+    public boolean isRejected()         { return "Rejected".equalsIgnoreCase(status); }
 
     public String getRoleName()               { return roleName; }
     public void setRoleName(String v)         { this.roleName = v; }

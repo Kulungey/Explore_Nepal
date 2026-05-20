@@ -1,6 +1,6 @@
 package com.explorenepal.controller.admin;
 
-import com.explorenepal.dao.UserDAO;
+import com.explorenepal.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,19 +11,18 @@ import java.sql.SQLException;
 
 public class UserManagementServlet extends HttpServlet {
 
-    private UserDAO userDAO;
+    private UserService userService;
 
     @Override
     public void init() throws ServletException {
-        userDAO = new UserDAO();
+        userService = new UserService();
     }
 
-    /** GET — list all users */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            request.setAttribute("users", userDAO.getAllUsers());
+            request.setAttribute("users", userService.getAllUsers());
         } catch (SQLException e) {
             request.setAttribute("users", java.util.Collections.emptyList());
             request.setAttribute("errorMessage", "Failed to load users.");
@@ -32,17 +31,32 @@ public class UserManagementServlet extends HttpServlet {
                .forward(request, response);
     }
 
-    /** POST — change a user's role */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String userIdStr = request.getParameter("userId");
+        String action    = request.getParameter("action");
         String roleId    = request.getParameter("roleId");
+
         try {
-            if (userIdStr != null && roleId != null) {
-                userDAO.updateRole(Integer.parseInt(userIdStr), Integer.parseInt(roleId));
+            if (userIdStr != null) {
+                int userId = Integer.parseInt(userIdStr);
+                if ("delete".equals(action)) {
+                    userService.deleteUser(userId);
+                } else if ("approve".equals(action)) {
+                    userService.approveUser(userId);
+                } else if ("reject".equals(action)) {
+                    userService.rejectUser(userId);
+                } else if (roleId != null) {
+                    userService.updateRole(userId, Integer.parseInt(roleId));
+                }
             }
-        } catch (SQLException | NumberFormatException ignored) {}
+        } catch (SQLException e) {
+            request.getSession().setAttribute("errorMessage", "Database error: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            request.getSession().setAttribute("errorMessage", "Invalid user ID provided.");
+        }
+
         response.sendRedirect(request.getContextPath() + "/admin/users");
     }
 }

@@ -110,6 +110,35 @@ public class UserDAO {
             return ps.executeUpdate() == 1;
         }
     }
+    
+    public boolean deleteUser(int id) throws SQLException {
+        String sql = "DELETE FROM users WHERE id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() == 1;
+        }
+    }
+    
+    public boolean updateStatus(int userId, String status) throws SQLException {
+        String sql = "UPDATE users SET status = ? WHERE id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() == 1;
+        }
+    }
+    
+    public int countPendingUsers() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM users WHERE status = 'Pending'";
+        try (Connection con = DBConnection.getConnection();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next()) return rs.getInt(1);
+        }
+        return 0;
+    }
 
     private User mapRow(ResultSet rs) throws SQLException {
         User u = new User();
@@ -122,6 +151,7 @@ public class UserDAO {
         u.setRoleName(rs.getString("role_name"));
         Timestamp ts = rs.getTimestamp("created_at");
         if (ts != null) u.setCreatedAt(ts.toLocalDateTime());
+        u.setStatus(rs.getString("status"));
         return u;
     }
 }

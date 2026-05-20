@@ -34,6 +34,25 @@
         <div class="alert alert-error"><c:out value="${errorMessage}"/></div>
       </c:if>
 
+      <%-- Pending users warning --%>
+      <c:if test="${pendingUsers > 0}">
+        <div style="background:#FEF3C7; border:1px solid #F59E0B; border-radius:var(--radius-lg);
+                    padding:var(--sp-3) var(--sp-4); margin-bottom:var(--sp-4);
+                    display:flex; align-items:center; gap:var(--sp-3);">
+          <span style="font-size:1.5rem;">⚠️</span>
+          <div>
+            <strong style="color:#92400E;">Pending Approvals:</strong>
+            <span style="color:#92400E;">
+              <c:out value="${pendingUsers}"/> user(s) are waiting for account approval.
+            </span>
+            <a href="${pageContext.request.contextPath}/admin/users"
+               style="margin-left:12px; color:#B45309; font-weight:700; text-decoration:underline;">
+              Review now →
+            </a>
+          </div>
+        </div>
+      </c:if>
+
       <%-- Stat cards --%>
       <div class="grid-3" style="margin-bottom:var(--sp-4);">
 

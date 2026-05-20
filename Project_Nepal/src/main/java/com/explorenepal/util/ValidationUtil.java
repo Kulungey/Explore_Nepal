@@ -24,8 +24,7 @@ public class ValidationUtil {
 
     /** Returns true if phone is exactly 10 digits. */
     public static boolean isValidPhone(String phone) {
-        if (isBlank(phone)) return false;
-        return phone.matches("\\d{10}");
+        return phone != null && phone.matches("9\\d{9}");
     }
 
     /** Returns true if password meets minimum length of 6 characters. */

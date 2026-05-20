@@ -36,6 +36,7 @@ public class AdminDashboardServlet extends HttpServlet {
             request.setAttribute("totalUsers",        userDAO.countUsers());
             request.setAttribute("totalBookings",     bookingService.getTotalCount());
             request.setAttribute("totalRevenue",      bookingService.getTotalRevenue());
+            request.setAttribute("pendingUsers",      userDAO.countPendingUsers());
         } catch (Exception e) {
             request.setAttribute("errorMessage", "Failed to load dashboard data.");
         }
