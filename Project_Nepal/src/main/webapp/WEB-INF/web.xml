@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+  <display-name>Explore Nepal</display-name>
+
+  <session-config>
+    <session-timeout>30</session-timeout>
+    <cookie-config><http-only>true</http-only></cookie-config>
+  </session-config>
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <!-- ── FILTERS ── -->
+  <filter>
+    <filter-name>AuthFilter</filter-name>
+    <filter-class>com.explorenepal.filter.AuthFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>AdminFilter</filter-name>
+    <filter-class>com.explorenepal.filter.AdminFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+
+  <!-- Block guests from payment -->
+  <filter>
+    <filter-name>PaymentAuthFilter</filter-name>
+    <filter-class>com.explorenepal.filter.AuthFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>PaymentAuthFilter</filter-name>
+    <url-pattern>/payment</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>PaymentAuthFilter</filter-name>
+    <url-pattern>/payment/process</url-pattern>
+  </filter-mapping>
+
+  <!-- ── PUBLIC SERVLETS ── -->
+  <servlet>
+    <servlet-name>HomeServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.HomeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeServlet</servlet-name>
+    <url-pattern>/home</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>RegisterServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.RegisterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/register</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AboutServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.AboutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AboutServlet</servlet-name>
+    <url-pattern>/about</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ContactServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.ContactServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ContactServlet</servlet-name>
+    <url-pattern>/contact</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>DestinationServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.DestinationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DestinationServlet</servlet-name>
+    <url-pattern>/destination</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PaymentServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.PaymentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PaymentServlet</servlet-name>
+    <url-pattern>/payment</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PaymentProcessServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.PaymentProcessServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PaymentProcessServlet</servlet-name>
+    <url-pattern>/payment/process</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>MyBookingsServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.MyBookingsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MyBookingsServlet</servlet-name>
+    <url-pattern>/my-bookings</url-pattern>
+  </servlet-mapping>
+
+  <!-- ── ADMIN SERVLETS ── -->
+  <servlet>
+    <servlet-name>AdminDashboardServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.admin.AdminDashboardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminDashboardServlet</servlet-name>
+    <url-pattern>/admin/dashboard</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>DestinationListServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.admin.DestinationListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DestinationListServlet</servlet-name>
+    <url-pattern>/admin/destinations</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>DestinationFormServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.admin.DestinationFormServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DestinationFormServlet</servlet-name>
+    <url-pattern>/admin/destination-form</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>DestinationDeleteServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.admin.DestinationDeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DestinationDeleteServlet</servlet-name>
+    <url-pattern>/admin/destination-delete</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>BookingListServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.admin.BookingListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BookingListServlet</servlet-name>
+    <url-pattern>/admin/bookings</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>UserManagementServlet</servlet-name>
+    <servlet-class>com.explorenepal.controller.admin.UserManagementServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserManagementServlet</servlet-name>
+    <url-pattern>/admin/users</url-pattern>
+  </servlet-mapping>
+
+  <!-- ── ERROR PAGES ── -->
+  <error-page>
+    <error-code>403</error-code>
+    <location>/WEB-INF/views/error/403.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/views/error/404.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/views/error/500.jsp</location>
+  </error-page>
+
+</web-app>

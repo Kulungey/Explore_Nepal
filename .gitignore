@@ -1,0 +1,7 @@
+.metadata/
+Servers/
+tomcat/
+*.zip
+*.log
+*.tmp
+*.bak
